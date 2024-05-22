@@ -61,12 +61,10 @@ func main() {
 
 	wsController := handlers.WebSocketHandler{Service: &destinationService, WebSocketManager: websocketManager}
 	routes.RegisterWebSocketRoutes(router, &wsController)
-	port := 3000
 
-	err := router.Run("localhost:" + string(rune(port)))
+	err := router.Run()
 	if err != nil {
 		log.Fatalf("Failed to run server: %v", err)
 		return
 	}
-	log.Println("WebSocket server started on :3000")
 }
