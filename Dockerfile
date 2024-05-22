@@ -1,8 +1,8 @@
 # Use the official Golang image as the base image
-FROM golang:1.18
+FROM golang:1.19
 
 # Set the Current Working Directory inside the container
-WORKDIR /app
+WORKDIR /project
 
 # Copy go.mod and go.sum files
 COPY go.mod go.sum ./
