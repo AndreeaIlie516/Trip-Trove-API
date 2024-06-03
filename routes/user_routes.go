@@ -14,7 +14,7 @@ func RegisterUserRoutes(router *gin.Engine, userHandler *handlers.UserHandler, r
 		userGroup.GET("/:id", roleMiddleware.RequireRole(entities.NormalUser), userHandler.UserByID)
 		userGroup.POST("/register", userHandler.Register)
 		userGroup.POST("/login", userHandler.Login)
-		userGroup.PUT("/:id", roleMiddleware.RequireRole(entities.NormalUser), userHandler.UpdateUser)
-		userGroup.DELETE("/:id", roleMiddleware.RequireRole(entities.NormalUser), userHandler.DeleteUser)
+		userGroup.PUT("/:id", roleMiddleware.RequireRole(entities.Admin), userHandler.UpdateUser)
+		userGroup.DELETE("/:id", roleMiddleware.RequireRole(entities.Admin), userHandler.DeleteUser)
 	}
 }

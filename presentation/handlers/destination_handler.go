@@ -54,6 +54,12 @@ func (handler *DestinationHandler) DestinationsByLocationID(c *gin.Context) {
 }
 
 func (handler *DestinationHandler) CreateDestination(c *gin.Context) {
+	role, _ := c.Get("role")
+	if role != entities.Manager && role != entities.Admin {
+		c.JSON(http.StatusForbidden, gin.H{"error": "Access denied"})
+		return
+	}
+
 	var newDestination entities.Destination
 
 	if err := c.BindJSON(&newDestination); err != nil {
@@ -83,12 +89,16 @@ func (handler *DestinationHandler) CreateDestination(c *gin.Context) {
 		return
 	}
 
-	//handler.Service.wsManager.AddToBroadcast(websocket.EventUpdateNotification{Action: "CreateDestination", Destination: destination})
-
 	c.JSON(http.StatusCreated, destination)
 }
 
 func (handler *DestinationHandler) DeleteDestination(c *gin.Context) {
+	role, _ := c.Get("role")
+	if role != entities.Manager && role != entities.Admin {
+		c.JSON(http.StatusForbidden, gin.H{"error": "Access denied"})
+		return
+	}
+
 	id := c.Param("id")
 
 	destination, err := handler.Service.DeleteDestination(id)
@@ -106,6 +116,12 @@ func (handler *DestinationHandler) DeleteDestination(c *gin.Context) {
 }
 
 func (handler *DestinationHandler) UpdateDestination(c *gin.Context) {
+	role, _ := c.Get("role")
+	if role != entities.Manager && role != entities.Admin {
+		c.JSON(http.StatusForbidden, gin.H{"error": "Access denied"})
+		return
+	}
+
 	id := c.Param("id")
 
 	var updatedDestination entities.Destination

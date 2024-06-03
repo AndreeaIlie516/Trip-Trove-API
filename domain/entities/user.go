@@ -30,5 +30,6 @@ type AccessType uint8
 
 const (
 	NormalUser AccessType = iota
+	Manager
 	Admin
 )

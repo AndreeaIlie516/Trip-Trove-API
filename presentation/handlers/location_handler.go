@@ -38,6 +38,12 @@ func (handler *LocationHandler) LocationByID(c *gin.Context) {
 }
 
 func (handler *LocationHandler) CreateLocation(c *gin.Context) {
+	role, _ := c.Get("role")
+	if role != entities.Manager && role != entities.Admin {
+		c.JSON(http.StatusForbidden, gin.H{"error": "Access denied"})
+		return
+	}
+
 	var newLocation entities.Location
 
 	if err := c.BindJSON(&newLocation); err != nil {
@@ -93,6 +99,12 @@ func (handler *LocationHandler) CreateLocation(c *gin.Context) {
 }
 
 func (handler *LocationHandler) DeleteLocation(c *gin.Context) {
+	role, _ := c.Get("role")
+	if role != entities.Manager && role != entities.Admin {
+		c.JSON(http.StatusForbidden, gin.H{"error": "Access denied"})
+		return
+	}
+
 	id := c.Param("id")
 
 	location, err := handler.Service.DeleteLocation(id)
@@ -110,6 +122,12 @@ func (handler *LocationHandler) DeleteLocation(c *gin.Context) {
 }
 
 func (handler *LocationHandler) UpdateLocation(c *gin.Context) {
+	role, _ := c.Get("role")
+	if role != entities.Manager && role != entities.Admin {
+		c.JSON(http.StatusForbidden, gin.H{"error": "Access denied"})
+		return
+	}
+
 	id := c.Param("id")
 
 	var updatedLocation entities.Location

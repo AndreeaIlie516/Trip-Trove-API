@@ -55,8 +55,8 @@ func main() {
 	locationHandler := handlers.LocationHandler{Service: &locationService}
 	userHandler := handlers.UserHandler{Service: &userService}
 
-	routes.RegisterDestinationRoutes(router, &destinationHandler)
-	routes.RegisterLocationRoutes(router, &locationHandler)
+	routes.RegisterDestinationRoutes(router, &destinationHandler, authMiddleware)
+	routes.RegisterLocationRoutes(router, &locationHandler, authMiddleware)
 	routes.RegisterUserRoutes(router, &userHandler, authMiddleware)
 
 	wsController := handlers.WebSocketHandler{Service: &destinationService, WebSocketManager: websocketManager}
